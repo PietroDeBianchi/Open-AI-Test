@@ -1,4 +1,5 @@
 const openai = require("../config/openaiConfig");
+const testSystemContent = require("../utils/systemContent")
 //////////////////////////////////////////////////
 // ASSISTANT INTERACTIONS
 //////////////////////////////////////////////////
@@ -15,10 +16,10 @@ exports.testSession = async (req, res) => {
         }
         // Initialize a new session if it doesn't exist
         if (!sessions[chatId]) {
-            // Add initial system message with context and movie data
-            sessions[chatId] = [{ role: "system", content: "Start Session" }];
+            // Add initial system content
+            sessions[chatId] = [{ role: "system", content: testSystemContent.test1 }];
         }
-        // Add user's prompt to the session conversation history
+        // Add user's prompt to the session history
         sessions[chatId].push({ role: "user", content: prompt });
         // Send conversation history to OpenAI for processing
         const response = await openai.chat.completions.create({
@@ -34,7 +35,7 @@ exports.testSession = async (req, res) => {
         }
         // Add assistant's response to the session history
         sessions[chatId].push({ role: "assistant", content: assistantMessage });
-        // Return assistant's response to the client
+        // Return assistant's response to the client set sessions[chatId] for full chat
         res.status(200).json({ message: assistantMessage });
     } catch (err) {
         console.error("Error in movieSession:", err);

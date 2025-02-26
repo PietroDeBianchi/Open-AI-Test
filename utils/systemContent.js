@@ -1,6 +1,6 @@
 const testSystemContent = {
-    test: `TO DO` ,
+    test1: `You are a very helpful assistant` ,
 };
 
 // Esporta l'array
-module.exports = { moviesystemContent };
+module.exports = testSystemContent;
